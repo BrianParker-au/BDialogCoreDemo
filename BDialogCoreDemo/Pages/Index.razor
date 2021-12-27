@@ -1,9 +1,46 @@
 ﻿@page "/"
+@using BDialogCore.Views.Components
+@using BDialogCore.Models
 
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+<hr />
+<br />
+Is resizing: @isResizing
+<br />
+resizing count: @resizingCount
+<br />
+resize count: @resizeCount
+<br />
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<hr />
+
+A Button : <button class="my-5 btn btn-primary dropdown-toggle" @ref=@aButton @onclick=@ButtonClicked>Click Me</button>
+
+<hr />
+
+An Input :
+<input class="my-5" @ref=@anInput type="text" placeholder="Enter something" @onfocusin=@Onfocusin @onfocusout=@Onfocusout />
+
+<PopOut Parent=@aButton 
+		Visible=@(!isResizing)  
+		DropDownWidth=DropDownWidth.Minimum
+		AlignSide=AlignSide.End
+		Placement=Placement.Below
+		class="p-1 mt-1 card bg-white shadow-sm">
+	<div>
+		Hello
+	</div>
+</PopOut>
+
+<PopOut Parent=@anInput 
+		DropDownWidth=DropDownWidth.Grow
+		AlignSide=AlignSide.End
+		Visible=@(!isResizing) 
+		class="p-1 mt-1 card bg-white shadow-sm">
+	Hello
+</PopOut>
+
