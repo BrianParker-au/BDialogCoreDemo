@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace BDialogCoreDemo.Pages
 {
-    public partial class Index : ComponentBase
+    public partial class Index : ComponentBase, IDisposable
     {
 
         private bool isResizing = false;
@@ -12,12 +12,13 @@ namespace BDialogCoreDemo.Pages
 
         [Inject]
         private IJSInteropCoreService? JSInteropCoreService { get; set; }
+
         protected override void OnInitialized()
         {
             JSInteropCoreService!.OnResize += Index_OnResize;
             JSInteropCoreService!.OnResizing += Index_OnResizing;
             base.OnInitialized();
-        }
+        }       
 
         private void Index_OnResizing(bool isResizing)
         {
@@ -25,7 +26,6 @@ namespace BDialogCoreDemo.Pages
             resizingCount++;
             InvokeAsync(StateHasChanged);
         }
-
         private void Index_OnResize()
         {
             resizeCount++;
@@ -39,13 +39,18 @@ namespace BDialogCoreDemo.Pages
         {
 
         }
-
         private void Onfocusout()
         {
 
         }
         private void Onfocusin()
         {
+
+        }
+        public void Dispose()
+        {
+            JSInteropCoreService!.OnResize -= Index_OnResize;
+            JSInteropCoreService!.OnResizing -= Index_OnResizing;
 
         }
     }
